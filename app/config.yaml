@@ -1,0 +1,45 @@
+# Strategy config
+watchlist:
+  - PLTR
+  - AEVA
+  - WKHS
+  - QUBT
+  - ARKQ
+  - WLDN
+  - BLNK
+  - CRSR
+  - CLOV
+  - BYND
+  - DOGE-USD  # crypto via yfinance (optional)
+
+max_positions: 5
+target_cash_pct: 0.15   # keep at least 15% cash buffer
+min_trade_usd: 20       # ignore tiny orders
+
+indicators:
+  sma_fast: 20
+  sma_slow: 50
+  rsi_len: 14
+  rsi_buy_min: 40
+  rsi_sell_max: 75
+
+sentiment:
+  use_vader: true
+  min_headlines: 3
+  buy_threshold: 0.05
+  sell_threshold: -0.05
+
+risk:
+  max_per_position_pct: 0.20
+  stop_loss_pct: 0.08
+  take_profit_pct: 0.20
+
+cooldowns:
+  buy_minutes: 60
+  sell_minutes: 60
+
+news_rss:  # lightweight public feeds
+  - https://feeds.a.dj.com/rss/RSSMarketsMain.xml
+  - https://www.investing.com/rss/news_25.rss
+  - https://feeds.marketwatch.com/marketwatch/topstories/
+  - https://www.cnbc.com/id/100003114/device/rss/rss.html

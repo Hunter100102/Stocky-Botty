@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Stock Robot (Free) Dashboard</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#0b0d12;color:#e6e9ef;margin:0;padding:24px}
+    .card{background:#121521;border:1px solid #22283a;border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+    h1{margin-top:0;font-size:24px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px;border-bottom:1px solid #23293b;text-align:left}
+    code{background:#1a1f2e;padding:2px 6px;border-radius:6px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid #2b3350;color:#e6e9ef;text-decoration:none}
+    .btn:hover{background:#1a2033}
+    .pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2b3350}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Stock Robot (Free) — Dashboard</h1>
+    <p>Status: <span class="pill">{{ status }}</span> | Mode: <code>{{ mode }}</code></p>
+    <p>Watchlist: {{ watchlist }}</p>
+    <p><a class="btn" href="#" onclick="runJob();return false;">Run Now</a></p>
+  </div>
+
+  <div class="card">
+    <h2>Positions</h2>
+    <table>
+      <tr><th>Ticker</th><th>Qty</th><th>Avg Price</th><th>Market Price</th><th>Value</th><th>P/L</th></tr>
+      {% for p in positions %}
+      <tr>
+        <td>{{ p['symbol'] }}</td>
+        <td>{{ '%.4f'|format(p['qty']) }}</td>
+        <td>{{ '%.2f'|format(p['avg_price']) }}</td>
+        <td>{{ '%.2f'|format(p['market_price']) }}</td>
+        <td>{{ '%.2f'|format(p['value']) }}</td>
+        <td>{{ '%.2f'|format(p['pl']) }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Recent Signals</h2>
+    <table>
+      <tr><th>Time</th><th>Symbol</th><th>Action</th><th>Reason</th></tr>
+      {% for s in signals %}
+      <tr>
+        <td>{{ s['ts'] }}</td>
+        <td>{{ s['symbol'] }}</td>
+        <td>{{ s['action'] }}</td>
+        <td>{{ s['reason'] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+<script>
+async function runJob(){
+  const res = await fetch('/run',{method:'POST'});
+  const t = await res.text();
+  alert(t);
+  location.reload();
+}
+</script>
+</body>
+</html>
